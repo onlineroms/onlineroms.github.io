@@ -3,89 +3,166 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DSi Shop for ROMS</title>
+  <title>DSi HB Shop</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #eaeaea;
+      font-family: 'Trebuchet MS', sans-serif;
+      background-color: white;
       text-align: center;
       margin: 0;
       padding: 0;
     }
+
     .header {
-      background-color: #00aaff;
-      padding: 20px;
-      color: white;
+      background-color: #d9ecff;
+      padding: 10px;
+      border-bottom: 2px solid #88b8e8;
     }
-    .welcome {
-      font-size: 24px;
+
+    .header-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #000;
+      margin: 0;
+    }
+
+    .points-bar {
+      background-color: #e0f2ff;
+      border-top: 2px solid #88b8e8;
+      border-bottom: 2px solid #88b8e8;
+      color: #555;
+      font-size: 14px;
+      padding: 10px;
+    }
+
+    .points-bar img {
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    .main-content {
+      background-color: #f2f9ff;
+      padding: 20px 0;
+    }
+
+    .main-content .shop-logo {
       margin: 20px 0;
     }
-    .button {
-      display: inline-block;
-      padding: 20px;
-      font-size: 24px;
-      background-color: #007acc;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      margin: 10px;
-    }
-    .button:hover {
-      background-color: #005fa3;
-    }
-    .small-button {
-      display: inline-block;
+
+    /* Neuer Button-Stil */
+    .shop-button {
+      display: block;
+      width: 250px;
+      margin: 20px auto;
       padding: 10px;
+      background: linear-gradient(to bottom, #e0f7ff, #88cfff);
+      border-radius: 15px;
+      border: 2px solid #005faa;
       font-size: 16px;
-      background-color: #00aaff;
-      color: white;
+      text-align: center;
+      color: #005faa;
       text-decoration: none;
-      border-radius: 10px;
-      margin: 10px;
+      font-weight: bold;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
-    .small-button:hover {
-      background-color: #007acc;
+
+    .shop-button:hover {
+      background: linear-gradient(to bottom, #88cfff, #e0f7ff);
+      cursor: pointer;
+      color: #003f7a;
     }
+
+    .important-info {
+      background-color: #c8f6b8;
+      border: 2px solid #88b8e8;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    .important-info .new-label {
+      background-color: yellow;
+      color: red;
+      padding: 3px 8px;
+      margin-right: 5px;
+    }
+
     .loading {
       display: none;
       position: absolute;
       top: 10px;
       right: 10px;
     }
+
     .loading img {
       width: 50px;
     }
+
     .homebrew-list {
       display: none;
       padding: 20px;
     }
+
     .homebrew-item {
       margin: 10px 0;
+    }
+
+    .back-button {
+      margin: 20px auto;
+      padding: 10px 40px;
+      background: linear-gradient(to bottom, #e0f7ff, #88cfff);
+      border-radius: 15px;
+      border: 2px solid #005faa;
+      font-size: 16px;
+      text-align: center;
+      color: #005faa;
+      text-decoration: none;
+      font-weight: bold;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background: linear-gradient(to bottom, #88cfff, #e0f7ff);
+      cursor: pointer;
+      color: #003f7a;
     }
   </style>
 </head>
 <body>
 
   <div class="header">
-    <div class="welcome">Welcome to the DSi Shop for ROMS!</div>
-    <div class="button" id="startButton">Start Shopping</div>
-    <div class="small-button" id="errorButton">TheErrorExe</div>
-    <div class="small-button" id="contactButton">Contact</div>
+    <div class="header-title">Nintendo DSi Shop</div>
+  </div>
+
+  <div class="points-bar">
+    <img src="points-icon.png" alt="Points">
+    0 Nintendo DSi Points
+  </div>
+
+  <div class="main-content">
+    <img src="shop-logo.png" alt="DSiWare Logo" class="shop-logo">
+    
+    <a href="#" id="startShopping" class="shop-button">Start Shopping</a>
+
+    <div class="important-info">
+      <span class="new-label">NEW</span>
+      Important Info
+    </div>
   </div>
 
   <div class="loading" id="loading">
-    <img src="loading.GIF" alt="Loading...">
+    <img src="loading.gif" alt="Loading...">
   </div>
 
   <div class="homebrew-list" id="homebrewList">
     <div class="homebrew-item">
-      <a href="game1.nds" class="button">Download Game 1</a>
+      <a href="game1.nds" class="shop-button">Download Game 1</a>
     </div>
     <div class="homebrew-item">
-      <a href="game2.nds" class="button">Download Game 2</a>
+      <a href="game2.nds" class="shop-button">Download Game 2</a>
     </div>
     <!-- Weitere Homebrew-Elemente -->
+    <a href="#" class="back-button" id="backToMenu">Back</a>
   </div>
 
   <audio id="bgMusic" loop>
@@ -97,26 +174,22 @@
   <script>
     const loading = document.getElementById('loading');
     const homebrewList = document.getElementById('homebrewList');
+    const mainContent = document.querySelector('.main-content');
+    const startShoppingButton = document.getElementById('startShopping');
+    const backToMenuButton = document.getElementById('backToMenu');
     const bgMusic = document.getElementById('bgMusic');
     let musicPlaying = false;
 
-    document.getElementById('startButton').addEventListener('click', function() {
+    startShoppingButton.addEventListener('click', function() {
       showLoading(() => {
         homebrewList.style.display = 'block';
-        document.getElementById('startButton').style.display = 'none';
+        mainContent.style.display = 'none';
       });
     });
 
-    document.getElementById('errorButton').addEventListener('click', function() {
-      showLoading(() => {
-        window.location.href = 'errorexe.html';
-      });
-    });
-
-    document.getElementById('contactButton').addEventListener('click', function() {
-      showLoading(() => {
-        window.location.href = 'contact.html';
-      });
+    backToMenuButton.addEventListener('click', function() {
+      homebrewList.style.display = 'none';
+      mainContent.style.display = 'block';
     });
 
     function showLoading(callback) {
