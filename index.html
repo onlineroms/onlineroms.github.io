@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DSi Shop for ROMS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #eaeaea;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      background-color: #00aaff;
+      padding: 20px;
+      color: white;
+    }
+    .welcome {
+      font-size: 24px;
+      margin: 20px 0;
+    }
+    .button {
+      display: inline-block;
+      padding: 20px;
+      font-size: 24px;
+      background-color: #007acc;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    .button:hover {
+      background-color: #005fa3;
+    }
+    .small-button {
+      display: inline-block;
+      padding: 10px;
+      font-size: 16px;
+      background-color: #00aaff;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    .small-button:hover {
+      background-color: #007acc;
+    }
+    .loading {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+    .loading img {
+      width: 50px;
+    }
+    .homebrew-list {
+      display: none;
+      padding: 20px;
+    }
+    .homebrew-item {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="welcome">Welcome to the DSi Shop for ROMS!</div>
+    <div class="button" id="startButton">Start Shopping</div>
+    <div class="small-button" id="errorButton">TheErrorExe</div>
+    <div class="small-button" id="contactButton">Contact</div>
+  </div>
+
+  <div class="loading" id="loading">
+    <img src="loading.GIF" alt="Loading...">
+  </div>
+
+  <div class="homebrew-list" id="homebrewList">
+    <div class="homebrew-item">
+      <a href="game1.nds" class="button">Download Game 1</a>
+    </div>
+    <div class="homebrew-item">
+      <a href="game2.nds" class="button">Download Game 2</a>
+    </div>
+    <!-- Weitere Homebrew-Elemente -->
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="musik1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <button onclick="toggleMusic()" id="musicToggle">Toggle Music</button>
+
+  <script>
+    const loading = document.getElementById('loading');
+    const homebrewList = document.getElementById('homebrewList');
+    const bgMusic = document.getElementById('bgMusic');
+    let musicPlaying = false;
+
+    document.getElementById('startButton').addEventListener('click', function() {
+      showLoading(() => {
+        homebrewList.style.display = 'block';
+        document.getElementById('startButton').style.display = 'none';
+      });
+    });
+
+    document.getElementById('errorButton').addEventListener('click', function() {
+      showLoading(() => {
+        window.location.href = 'errorexe.html';
+      });
+    });
+
+    document.getElementById('contactButton').addEventListener('click', function() {
+      showLoading(() => {
+        window.location.href = 'contact.html';
+      });
+    });
+
+    function showLoading(callback) {
+      loading.style.display = 'block';
+      setTimeout(() => {
+        loading.style.display = 'none';
+        callback();
+      }, 1500);  // 1.5 Sekunden Ladezeit
+    }
+
+    function toggleMusic() {
+      if (musicPlaying) {
+        bgMusic.pause();
+        musicPlaying = false;
+      } else {
+        bgMusic.play();
+        musicPlaying = true;
+      }
+    }
+  </script>
+
+</body>
+</html>
