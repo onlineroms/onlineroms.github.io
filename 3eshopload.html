@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nintendo 3DS eShop Ladebildschirm</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: rgb(220, 219, 188); /* Exakte Hintergrundfarbe */
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+        }
+        #top-section, #bottom-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #top-section img, #bottom-section img {
+            margin: 10px;
+        }
+        #top-section {
+            flex: 2;
+        }
+        #bottom-section {
+            flex: 1;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="top-section">
+    <img id="top-image" src="loading1.GIF" alt="Laden...">
+</div>
+<div id="bottom-section">
+    <img id="bottom-image" src="loading2.GIF" alt="Laden...">
+</div>
+
+<audio id="background-music" loop>
+    <source src="loading1.mp3" type="audio/mp3">
+    Dein Browser unterstützt keine Audioelemente.
+</audio>
+
+<script>
+    const topImage = document.getElementById('top-image');
+    const bottomImage = document.getElementById('bottom-image');
+    const music = document.getElementById('background-music');
+
+    // Start background music
+    music.play();
+
+    // Ablauf der Animationen
+    function startSequence() {
+        setTimeout(() => {
+            // 3 Sekunden Loading1 (Logo mit Lade-Icon) + Loading2 (kleine Einkaufstasche)
+            topImage.src = 'loading1.GIF'; 
+            bottomImage.src = 'loading2.GIF'; 
+        }, 0);
+
+        setTimeout(() => {
+            // 2 Sekunden Signing In (Login-Animation)
+            bottomImage.src = 'login.GIF'; 
+        }, 3000);
+
+        setTimeout(() => {
+            // 3 Sekunden Loading1 (Logo mit Lade-Icon) + Loading2 (kleine Einkaufstasche)
+            bottomImage.src = 'loading2.GIF'; 
+        }, 5000);
+
+        setTimeout(() => {
+            // 5 Sekunden Finalizing (tanzende Einkaufstaschen) + loading2.mp3 (Musikwechsel)
+            topImage.src = 'finalizing.GIF'; 
+            bottomImage.style.display = 'none'; 
+            music.src = 'loading2.mp3';
+            music.play();
+        }, 8000);
+
+        setTimeout(() => {
+            // 2 Sekunden Finished (abschließendes Bild)
+            topImage.src = 'finished1.GIF'; 
+        }, 13000);
+
+        setTimeout(() => {
+            // Weiterleitung zur eShop Seite
+            window.location.href = "eshop3ds.html";
+        }, 15000);
+    }
+
+    // Starte die Sequenz
+    startSequence();
+</script>
+
+</body>
+</html>
